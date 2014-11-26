@@ -4,7 +4,7 @@ instala_jboss() {
 
    echo "Criando o arquivo /etc/default/wildfly.conf ..."
    cat <<EOF | sudo tee /etc/default/wildfly.conf &> /dev/null
-JAVA_HOME="/usr/lib/jvm/java"
+JAVA_HOME="$JAVA_HOME"
 JBOSS_USER=$USER
 JBOSS_HOME="$JBOSS_HOME"
 JBOSS_MODE=standalone
