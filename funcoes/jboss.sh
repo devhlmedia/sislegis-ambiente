@@ -3,8 +3,9 @@ export JBOSS_HOME=$FERRAMENTAS_DIR/jboss
 export PATH=$JBOSS_HOME/bin:$PATH
 # variáveis auxiliares
 JBOSS_BASE=$JBOSS_HOME/standalone
-JBOSS_LOG=$JBOSS_BASE/log
+JBOSS_CONFIGURATION=$JBOSS_BASE/configuration
 JBOSS_DEPLOYMENTS=$JBOSS_BASE/deployments
+JBOSS_LOG=$JBOSS_BASE/log
 
 # .JBoss - Funções
 # funções de instalação e remoção:

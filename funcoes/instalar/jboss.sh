@@ -8,7 +8,7 @@ JAVA_HOME="$JAVA_HOME"
 JBOSS_USER=$USER
 JBOSS_HOME="$JBOSS_HOME"
 JBOSS_MODE=standalone
-JBOSS_PARAMS="-b 0.0.0.0"
+JBOSS_PARAMS="-b 0.0.0.0 -bmanagement=0.0.0.0 -Dsislegis.app.home=$APP_HOME"
 EOF
 
    file2patch=etc/init.d/jboss
@@ -19,6 +19,10 @@ EOF
    file2patch=standalone/configuration/standalone.xml
    echo "Configurando o arquivo $JBOSS_HOME/$file2patch"
    patch $JBOSS_HOME/$file2patch < "$FUNCOES_DIR"/instalar/patches/JBOSS_HOME/$file2patch > /dev/null
+
+   echo "Configurando o usuário/senha (sislegis/@dmin123) para acesso a interface administrativa"
+   echo 'sislegis=fcdd56cdc33753b6a3647932ed4289c8' | tee -a $JBOSS_CONFIGURATION/mgmt-users.properties &> /dev/null
+   echo 'sislegis=' | tee -a $JBOSS_CONFIGURATION/mgmt-groups.properties &> /dev/null
 
    echo "Configurando a inicialização automática no boot"
    sudo chkconfig jboss on
