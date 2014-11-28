@@ -12,14 +12,21 @@ JBOSS_LOG=$JBOSS_BASE/log
 jboss_instalar() { instalar jboss "$@"; }
 jboss_remover() { remover jboss "$@"; }
 # funções de inicialização/parada/status: 
-jboss_start() { sudo systemctl start jboss; }
-jboss_stop() { sudo systemctl stop jboss; }
-jboss_status() { sudo systemctl status jboss; }
+_jboss_service() {
+    local op=$1
+    case `distro` in
+        Fedora) sudo systemctl $op jboss;;
+        CentOS|Ubuntu) sudo service jboss $op;;
+    esac
+}
+jboss_start() { _jboss_service start; }
+jboss_stop() { _jboss_service stop; }
+jboss_status() { _jboss_service status; }
 # funções de manipulação de logs:
 jboss_logs() { ls -lht "$JBOSS_LOG"/*.log; }
 jboss_rmlogs() { rm -f "$JBOSS_LOG"/*.log; }
 jboss_taillogs() { tail -f "$JBOSS_LOG"/*.log; }
-jboss_viewlogs() { vim "$JBOSS_LOG"/*log; }
+jboss_viewlogs() { view "$JBOSS_LOG"/*log; }
 # funções para visualizar e manipular arquivos de marcas no JBoss:
 # Refs: 
 # - https://docs.jboss.org/author/display/AS7/Application+deployment
