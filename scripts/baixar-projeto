@@ -2,8 +2,25 @@
 # Author: Paulo Jeronimo (email: paulojeronimo@gmail.com; twitter: @paulojeronimo)
 set +x
 
+CONFIG=~/.github
+
+source "$CONFIG" &> /dev/null || {
+    echo "O arquivo \"$CONFIG\" não foi encontrado ou está mal configurado!"
+    exit 1
+}
+
+[ ! -d ~/projetos -a ! -L ~/projetos ] && {
+    cd
+    if [[ ${PROJETOS_DIR##~/} =~ ^/.* ]]
+    then
+        ln -s "$PROJETOS_DIR"
+    else
+        ln -s "${PROJETOS_DIR##~/}" ${PROJETOS_DIR##*/}
+    fi
+}
+
 mkdir -p "$PROJETOS_DIR"
-cd "$PROJETOS_DIR"
+cd "$PROJETOS_DIR" || exit $?
 
 SCRIPT=`basename "$0"`
 case "$SCRIPT" in
@@ -16,8 +33,7 @@ then
 fi
 rm -rf $PROJETO
 
-source ~/.github
 REPO=GITHUB_SISLEGIS_${PROJETO^^}
-git clone ${!REPO} $PROJETO
+git clone ${!REPO} $PROJETO || exit $?
 
 # vim: set ts=4 sw=4 expandtab:
