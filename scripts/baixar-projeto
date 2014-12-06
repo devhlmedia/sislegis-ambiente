@@ -2,7 +2,7 @@
 # Author: Paulo Jeronimo (email: paulojeronimo@gmail.com; twitter: @paulojeronimo)
 set +x
 
-CONFIG=~/.github
+CONFIG=~/.projetos
 
 source "$CONFIG" &> /dev/null || {
     echo "O arquivo \"$CONFIG\" não foi encontrado ou está mal configurado!"
@@ -33,7 +33,6 @@ then
 fi
 rm -rf $PROJETO
 
-REPO=GITHUB_SISLEGIS_${PROJETO^^}
-git clone ${!REPO} $PROJETO || exit $?
+git clone ${!PROJETO} $PROJETO || exit $?
 
 # vim: set ts=4 sw=4 expandtab:
