@@ -1,0 +1,4 @@
+#!/bin/bash
+
+source ~/.$(hostname -s)
+salvar_instaladores
