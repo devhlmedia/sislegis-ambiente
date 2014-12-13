@@ -5,5 +5,6 @@ case `uname` in
     Darwin) :;;
 esac
 ECLIPSE_INSTALADOR_URL=http://eclipse.c3sl.ufpr.br/technology/epp/downloads/release/luna/SR1
+ECLIPSE_CONFIGURADO=eclipse.tar.gz
 export ECLIPSE_HOME=$FERRAMENTAS_DIR/$ECLIPSE_DIR
 export PATH=$ECLIPSE_HOME:$PATH

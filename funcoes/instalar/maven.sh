@@ -3,7 +3,7 @@ instala_maven() {
 
   if [ "$USA_PROXY" ]
   then
-    cat > $M2_HOME/conf/settings.xml <<EOF
+    cat > $HOME/.m2/settings.xml <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" 
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
