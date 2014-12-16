@@ -17,7 +17,7 @@ JAVA_HOME="$JAVA_HOME"
 JBOSS_USER=$USER
 JBOSS_HOME="$JBOSS_HOME"
 JBOSS_MODE=standalone
-JBOSS_PARAMS="-b 0.0.0.0 -bmanagement=0.0.0.0 -Dsislegis.app.home=$APP_HOME"
+JBOSS_PARAMS="-b 0.0.0.0 -bmanagement=0.0.0.0"
 EOF
 
    file2patch=etc/init.d/jboss
@@ -25,7 +25,7 @@ EOF
    case `distro` in
       Fedora|CentOS)
          init_d_script=$JBOSS_HOME/bin/init.d/wildfly-init-redhat.sh
-         patch_file="$FUNCOES_DIR"/instalar/patches/ROOT/$file2patch
+         patch_file="$FUNCOES_DIR"/instalar/patches/ROOT/${file2patch}.redhat
          ;;
       Ubuntu)
          init_d_script=$JBOSS_HOME/bin/init.d/wildfly-init-debian.sh
@@ -38,6 +38,11 @@ EOF
    file2patch=standalone/configuration/standalone.xml
    echo "Configurando o arquivo $JBOSS_HOME/$file2patch"
    patch $JBOSS_HOME/$file2patch < "$FUNCOES_DIR"/instalar/patches/JBOSS_HOME/$file2patch > /dev/null
+
+   echo "Configurando propriedades de sistema para o sislegis-app"
+   sed -i "
+       s,SISLEGIS_APP_HOME,$APP_HOME,g
+   " "$JBOSS_HOME/$file2patch"
 
    echo "Configurando o usuário/senha (sislegis/@dmin123) para acesso a interface administrativa"
    echo 'sislegis=fcdd56cdc33753b6a3647932ed4289c8' | tee -a $JBOSS_CONFIGURATION/mgmt-users.properties &> /dev/null

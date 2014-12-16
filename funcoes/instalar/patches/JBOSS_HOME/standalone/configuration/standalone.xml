@@ -1,6 +1,16 @@
---- standalone.xml.original	2014-11-26 13:54:21.610089005 -0800
-+++ standalone.xml	2014-11-26 13:59:39.061072337 -0800
-@@ -326,6 +326,7 @@
+--- standalone.xml.original	2014-11-21 04:43:26.000000000 +0000
++++ standalone.xml	2014-12-16 09:15:34.036665604 +0000
+@@ -26,6 +26,9 @@
+         <extension module="org.wildfly.extension.io"/>
+         <extension module="org.wildfly.extension.undertow"/>
+     </extensions>
++    <system-properties>
++        <property name="sislegis.app.home" value="SISLEGIS_APP_HOME"/>
++    </system-properties>
+     <management>
+         <security-realms>
+             <security-realm name="ManagementRealm">
+@@ -326,6 +329,7 @@
                  <http-listener name="default" socket-binding="http"/>
                  <host name="default-host" alias="localhost">
                      <location name="/" handler="welcome-content"/>
@@ -8,7 +18,7 @@
                      <filter-ref name="server-header"/>
                      <filter-ref name="x-powered-by-header"/>
                  </host>
-@@ -336,6 +337,7 @@
+@@ -336,6 +340,7 @@
              </servlet-container>
              <handlers>
                  <file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>
@@ -16,7 +26,7 @@
              </handlers>
              <filters>
                  <response-header name="server-header" header-name="Server" header-value="WildFly/8"/>
-@@ -382,4 +384,4 @@
+@@ -382,4 +387,4 @@
              <remote-destination host="localhost" port="25"/>
          </outbound-socket-binding>
      </socket-binding-group>
