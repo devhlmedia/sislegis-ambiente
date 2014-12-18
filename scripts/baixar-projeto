@@ -2,11 +2,14 @@
 # Author: Paulo Jeronimo (email: paulojeronimo@gmail.com; twitter: @paulojeronimo)
 set +x
 
-CONFIG=~/.projetos
+CONFIG="$AMBIENTE_HOME"/.projetos
 
 source "$CONFIG" &> /dev/null || {
-    echo "O arquivo \"$CONFIG\" não foi encontrado ou está mal configurado!"
-    exit 1
+    cat > "$CONFIG" <<EOF
+app=http://github.com/pensandoodireito/sislegis-app
+site=http://github.com/pensandoodireito/sislegis-site
+EOF
+    source "$CONFIG"
 }
 
 [ ! -d ~/projetos -a ! -L ~/projetos ] && {

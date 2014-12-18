@@ -1,7 +1,9 @@
 JBDEVSTUDIO_INSTALA_OPCS='--nao-baixa-arquivo'
 JBDEVSTUDIO_DIR=jbdevstudio
 JBDEVSTUDIO_LINK=$JBDEVSTUDIO_DIR
-JBDEVSTUDIO_INSTALADOR=jbdevstudio-product-eap-universal-7.1.1.GA-v20140314-2145-B688.jar
+JBDEVSTUDIO_INSTALADOR=jboss-devstudio-8.0.0.GA-v20141020-1042-B317-installer-eap.jar
+JBDEVSTUDIO_CONFIGURADO=jbdevstudio.tar.gz
+# Última versão (8.0.1): http://tools.jboss.org/blog/2014-12-15-GA-for-luna.html
 
 export JBDEVSTUDIO_HOME=$FERRAMENTAS_DIR/$JBDEVSTUDIO_DIR
 export PATH=$JBDEVSTUDIO_HOME:$PATH
