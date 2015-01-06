@@ -1,5 +1,5 @@
---- standalone.xml.original	2014-11-21 04:43:26.000000000 +0000
-+++ standalone.xml	2014-12-16 09:15:34.036665604 +0000
+--- standalone.xml.original	2015-01-06 13:12:12.881321305 +0000
++++ standalone.xml	2015-01-06 12:50:12.021192872 +0000
 @@ -26,6 +26,9 @@
          <extension module="org.wildfly.extension.io"/>
          <extension module="org.wildfly.extension.undertow"/>
@@ -10,7 +10,39 @@
      <management>
          <security-realms>
              <security-realm name="ManagementRealm">
-@@ -326,6 +329,7 @@
+@@ -142,10 +145,31 @@
+                         <password>sa</password>
+                     </security>
+                 </datasource>
++                <datasource jta="false" jndi-name="java:jboss/datasources/SISLEGIS" pool-name="SISLEGIS" enabled="true" use-ccm="false">
++                    <connection-url>jdbc:postgresql://localhost:5432/sislegis</connection-url>
++                    <driver>postgresql</driver>
++                    <transaction-isolation>TRANSACTION_READ_COMMITTED</transaction-isolation>
++                    <pool>
++                        <min-pool-size>10</min-pool-size>
++                        <max-pool-size>100</max-pool-size>
++                        <prefill>true</prefill>
++                    </pool>
++                    <security>
++                        <user-name>sislegis</user-name>
++                        <password>sislegis</password>
++                    </security>
++                    <statement>
++                        <prepared-statement-cache-size>32</prepared-statement-cache-size>
++                        <share-prepared-statements>true</share-prepared-statements>
++                    </statement>
++                </datasource>
+                 <drivers>
+                     <driver name="h2" module="com.h2database.h2">
+                         <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
+                     </driver>
++                    <driver name="postgresql" module="org.postgresql">
++                        <xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
++                    </driver>
+                 </drivers>
+             </datasources>
+         </subsystem>
+@@ -326,6 +350,7 @@
                  <http-listener name="default" socket-binding="http"/>
                  <host name="default-host" alias="localhost">
                      <location name="/" handler="welcome-content"/>
@@ -18,7 +50,7 @@
                      <filter-ref name="server-header"/>
                      <filter-ref name="x-powered-by-header"/>
                  </host>
-@@ -336,6 +340,7 @@
+@@ -336,6 +361,7 @@
              </servlet-container>
              <handlers>
                  <file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>
@@ -26,7 +58,7 @@
              </handlers>
              <filters>
                  <response-header name="server-header" header-name="Server" header-value="WildFly/8"/>
-@@ -382,4 +387,4 @@
+@@ -382,4 +408,4 @@
              <remote-destination host="localhost" port="25"/>
          </outbound-socket-binding>
      </socket-binding-group>

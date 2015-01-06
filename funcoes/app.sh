@@ -48,5 +48,33 @@ app_update_and_deploy() {
     app_clean_package
     app_deploy
 }
+app_createdb() {
+    cat <<EOF | psql -U postgres
+create database sislegis;
+create user sislegis with password 'sislegis';
+grant all privileges on database "sislegis" to sislegis;
+\q
+EOF
+}
+app_dropdb() {
+    cat <<EOF | psql -U postgres
+drop database sislegis;
+drop user sislegis
+EOF
+}
+_app_db_backup() { echo -n "$APP_HOME/db.backup.gz"; }
+app_dumpdb() {
+    pg_dump -U postgres sislegis | gzip > `_app_db_backup`
+}
+app_restoredb() {
+    if [ -f "$APP_HOME/db.backup.gz" ]
+    then
+        app_dropdb
+        app_createdb
+        cat `_app_db_backup` | gunzip | psql -U postgres sislegis
+    else
+        echo "O arquivo \"`_app_db_backup`\" não existe!"
+    fi
+}
 
 # vim: set ts=4 sw=4 expandtab:

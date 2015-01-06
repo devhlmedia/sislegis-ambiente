@@ -1,8 +1,38 @@
+POSTGRESQL_JDBC_DRIVER=postgresql-9.3-1102.jdbc41.jar
+
 _wildfly_conf() {
    case `distro` in
       Fedora|CentOS) echo -n /etc/default/wildfly.conf;;
       Ubuntu) echo -n /etc/default/wildfly;;
    esac
+}
+
+_baixa_driver_jdbc_postgres() {
+   local driver_url="http://jdbc.postgresql.org/download/$POSTGRESQL_JDBC_DRIVER"
+   echo "Baixando o driver JDBC do PostgreSQL de $driver_url"
+   cd "$INSTALADORES_DIR" && curl -O $driver_url
+   cd - &> /dev/null
+}
+
+_instala_driver_jdbc_postgres() {
+   local driver_dir="$JBOSS_HOME"/modules/system/layers/base/org/postgresql/main
+   echo "Instalando o driver JDBC do PostgreSQL como módulo"
+   mkdir -p "$driver_dir"
+   cat > "$driver_dir"/module.xml << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.0" name="org.postgresql">
+    <resources>
+        <resource-root path="$POSTGRESQL_JDBC_DRIVER"/>
+    </resources>
+    <dependencies>
+        <module name="javax.api"/>
+        <module name="javax.transaction.api"/>
+    </dependencies>
+</module>
+EOF
+   local driver_file="$INSTALADORES_DIR"/$POSTGRESQL_JDBC_DRIVER
+   [ -f "$driver_file" ] || _baixa_driver_jdbc_postgres
+   cp "$driver_file" "$driver_dir"/
 }
 
 instala_jboss() {
@@ -41,6 +71,8 @@ EOF
    file2patch=standalone/configuration/standalone.xml
    echo "Configurando o arquivo $JBOSS_HOME/$file2patch"
    patch $JBOSS_HOME/$file2patch < "$FUNCOES_DIR"/instalar/patches/JBOSS_HOME/$file2patch > /dev/null
+
+   _instala_driver_jdbc_postgres
 
    echo "Configurando propriedades de sistema para o sislegis-app"
    sed_i "
