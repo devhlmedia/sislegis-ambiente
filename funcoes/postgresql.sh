@@ -4,14 +4,15 @@ _postgresql_instalar_Linux_Fedora() {
     sudo yum -y install postgresql-server postgresql-contrib
     sudo postgresql-setup initdb
     sudo sed -i 's/^\(local.*\)peer/\1trust/g;s/^\(host.*\)ident/\1trust/g' /var/lib/pgsql/data/pg_hba.conf
+    if [ "$USER" = "vagrant" ]
+    then
+        sudo su postgres -c "printf \"\n\n# === CUSTOM VAGRANT SETTINGS === \n\" >> /var/lib/pgsql/data/postgresql.conf"
+        sudo su postgres -c "echo \"listen_addresses = '*'\" >> /var/lib/pgsql/data/postgresql.conf"
+        sudo su postgres -c "printf \"\n\n# === CUSTOM VAGRANT SETTINGS === \n\" >> /var/lib/pgsql/data/pg_hba.conf"
+        sudo su postgres -c "printf \"host\tall\t\tall\t\t10.0.2.2/24\t\ttrust\n\" >> /var/lib/pgsql/data/pg_hba.conf"
+    fi
     sudo systemctl start postgresql
     sudo systemctl enable postgresql
-}
-
-_postgresql_remover_Linux_Fedora() {
-    sudo systemctl stop postgresql
-    sudo yum -y erase postgresql-server postgresql-contrib
-    sudo userdel -rf postgres
 }
 
 # TODO
@@ -28,6 +29,29 @@ postgresql_instalar() {
     case `uname` in
         Linux) _postgresql_instalar_`uname`_`distro` ;;
         *) _postgresql_instalar_`uname` ;;
+    esac
+}
+
+_postgresql_remover_Linux_Fedora() {
+    sudo systemctl stop postgresql
+    sudo yum -y erase postgresql-server postgresql-contrib
+    sudo userdel -rf postgres
+}
+
+# TODO
+_postgresql_remover_Linux_Ubuntu() {
+    :
+}
+
+# TODO
+_postgresql_remover_Darwin() {
+    :
+}
+
+postgresql_remover() {
+    case `uname` in
+        Linux) _postgresql_remover_`uname`_`distro` ;;
+        *) _postgresql_remover_`uname` ;;
     esac
 }
 
