@@ -24,7 +24,7 @@ _postgresql_instalar_Darwin() {
     :
 }
 
-postgresql_intalar() {
+postgresql_instalar() {
     case `uname` in
         Linux) _postgresql_instalar_`uname`_`distro` ;;
         *) _postgresql_instalar_`uname` ;;
