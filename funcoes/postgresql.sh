@@ -20,6 +20,14 @@ _postgresql_instalar_Linux_Ubuntu() {
     :
 }
 
+_postgresql_instalar_Linux_CentOS() {
+    sudo yum -y install postgresql-server postgresql-contrib
+    sudo service postgresql initdb
+    sudo sed -i 's/^\(local.*\)ident/\1trust/g;s/^\(host.*\)ident/\1trust/g' /var/lib/pgsql/data/pg_hba.conf
+    sudo service postgresql start
+    sudo chkconfig postgresql on
+}
+
 # TODO
 _postgresql_instalar_Darwin() {
     :
@@ -41,6 +49,12 @@ _postgresql_remover_Linux_Fedora() {
 # TODO
 _postgresql_remover_Linux_Ubuntu() {
     :
+}
+
+_postgresql_remover_Linux_CentOS() {
+    sudo service postgresql stop
+    sudo yum -y erase postgresql-server postgresql-contrib
+    sudo userdel -rf postgres
 }
 
 # TODO
