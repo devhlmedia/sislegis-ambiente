@@ -12,7 +12,6 @@ jbdevstudio_em_execucao() {
     case `uname` in
         Linux) ps -o ucmd | grep -q jbdevstudio;;
         Darwin) ps -ef | grep -w jbdevstudio | grep -qv grep;;
-        CYGWIN) echo "Cygwin ainda não é suportado!"; return 1;;
     esac
 }
 jbdevstudio_salvar_workspace() {

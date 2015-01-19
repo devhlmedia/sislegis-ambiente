@@ -1,6 +1,6 @@
 #!/bin/bash
 
-_postgresql_instalar_Linux_Fedora() {
+_postgresql_instalar_Fedora() {
     sudo yum -y install postgresql-server postgresql-contrib
     sudo postgresql-setup initdb
     sudo sed -i 's/^\(local.*\)peer/\1trust/g;s/^\(host.*\)ident/\1trust/g' /var/lib/pgsql/data/pg_hba.conf
@@ -16,11 +16,11 @@ _postgresql_instalar_Linux_Fedora() {
 }
 
 # TODO
-_postgresql_instalar_Linux_Ubuntu() {
+_postgresql_instalar_Ubuntu() {
     :
 }
 
-_postgresql_instalar_Linux_CentOS() {
+_postgresql_instalar_CentOS() {
     sudo yum -y install postgresql-server postgresql-contrib
     sudo service postgresql initdb
     sudo sed -i 's/^\(local.*\)ident/\1trust/g;s/^\(host.*\)ident/\1trust/g' /var/lib/pgsql/data/pg_hba.conf
@@ -28,45 +28,33 @@ _postgresql_instalar_Linux_CentOS() {
     sudo chkconfig postgresql on
 }
 
-# TODO
-_postgresql_instalar_Darwin() {
-    :
-}
-
 postgresql_instalar() {
-    case `uname` in
-        Linux) _postgresql_instalar_`uname`_`distro` ;;
-        *) _postgresql_instalar_`uname` ;;
-    esac
+    _postgresql_instalar_`distro`
 }
 
-_postgresql_remover_Linux_Fedora() {
+_postgresql_remover_Fedora() {
     sudo systemctl stop postgresql
     sudo yum -y erase postgresql-server postgresql-contrib
     sudo userdel -rf postgres
 }
 
 # TODO
-_postgresql_remover_Linux_Ubuntu() {
+_postgresql_remover_Ubuntu() {
     :
 }
 
-_postgresql_remover_Linux_CentOS() {
+_postgresql_remover_CentOS() {
     sudo service postgresql stop
     sudo yum -y erase postgresql-server postgresql-contrib
     sudo userdel -rf postgres
 }
 
-# TODO
-_postgresql_remover_Darwin() {
-    :
+postgresql_remover() {
+    _postgresql_remover_`distro`
 }
 
-postgresql_remover() {
-    case `uname` in
-        Linux) _postgresql_remover_`uname`_`distro` ;;
-        *) _postgresql_remover_`uname` ;;
-    esac
+postgresql_pgadmin() { 
+    pgadmin3 &> /dev/null
 }
 
 # vim: ts=4 sw=4 expandtab:

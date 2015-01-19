@@ -7,7 +7,6 @@ eclipse_em_execucao() {
     case `uname` in
         Linux) ps -o ucmd | grep -q eclipse;;
         Darwin) ps -o comm | grep -q eclipse;;
-        CYGWIN) echo "Cygwin ainda não é suportado!"; return 1;;
     esac
 }
 eclipse_salvar_workspace() {

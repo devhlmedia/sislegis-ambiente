@@ -2,21 +2,20 @@ export APP_HOME=$PROJETOS_DIR/app
 
 case `uname` in
   Linux)
-    distro=`echo $(lsb_release -i | awk -F: '{print $2}')`
-    case $distro in
-      Fedora|CentOS|Ubuntu)
-        :
+    case `distro` in
+      Fedora|Ubuntu)
+        APP_HOST=sislegis.local
+        APP_IP=127.0.0.1
         ;;
-      *)
-        echo "Aviso: a configuração de ambiente para \"$distro\" não é suportada!"
+      CentOS)
+        APP_HOST=homologacao-sislegis.pensandoodireito.mj.gov.br
+        APP_IP=172.17.6.80
         ;;
     esac
     ;;
   Darwin)
-    :
-    ;;
-  CYGWIN)
-    echo "Aviso: a configuração de ambiente para o CYGWIN não é suportada!"
+    APP_HOST=sislegis.local
+    APP_IP=127.0.0.1
     ;;
 esac
 

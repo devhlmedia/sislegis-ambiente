@@ -69,14 +69,15 @@ EOF
    fi
 
    file2patch=standalone/configuration/standalone.xml
-   echo "Configurando o arquivo $JBOSS_HOME/$file2patch"
+   echo "Aplicando patch no arquivo $JBOSS_HOME/$file2patch"
    patch $JBOSS_HOME/$file2patch < "$FUNCOES_DIR"/instalar/patches/JBOSS_HOME/$file2patch > /dev/null
 
    _instala_driver_jdbc_postgres
 
-   echo "Configurando propriedades de sistema para o sislegis-app"
+   echo "Configurando variáveis no arquivo $JBOSS_HOME/$file2patch"
    sed_i "
        s,SISLEGIS_APP_HOME,$APP_HOME,g
+       s,SISLEGIS_APP_HOST,$APP_HOST,g
    " "$JBOSS_HOME/$file2patch"
 
    echo "Configurando o usuário/senha (sislegis/@dmin123) para acesso a interface administrativa"
@@ -91,6 +92,16 @@ EOF
           Ubuntu) sudo update-rc.d jboss defaults;;
       esac
    fi
+
+   case `uname` in
+      Darwin|Linux)
+         echo "Configurando o arquivo /etc/hosts"
+         if ! grep -q "$APP_IP.*$APP_HOST" /etc/hosts
+         then
+            echo -e "$APP_IP\t$APP_HOST" | sudo tee -a /etc/hosts &> /dev/null
+         fi
+         ;;
+   esac
 }
 
 remove_jboss() {
