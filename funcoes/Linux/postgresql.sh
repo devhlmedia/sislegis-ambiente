@@ -17,7 +17,7 @@ _postgresql_instalar_Fedora() {
 
 # TODO
 _postgresql_instalar_Ubuntu() {
-    :
+    sudo apt-get -y install postgresql postgresql-contrib pgadmin3
 }
 
 _postgresql_instalar_CentOS() {
@@ -40,7 +40,7 @@ _postgresql_remover_Fedora() {
 
 # TODO
 _postgresql_remover_Ubuntu() {
-    :
+    sudo apt-get -y remove postgresql postgresql-contrib pgadmin3
 }
 
 _postgresql_remover_CentOS() {

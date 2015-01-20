@@ -48,8 +48,19 @@ app_update_and_deploy() {
     app_clean_package
     app_deploy
 }
+app_psql() {
+    case `uname` in
+        Darwin) psql -U postgres;;
+        Linux)
+            case `distro` in
+                Fedora|CentOS) psql -U postgres;;
+                Ubuntu) sudo -u postgres psql;;
+            esac
+            ;;
+    esac
+}
 app_createdb() {
-    cat <<EOF | psql -U postgres
+    cat <<EOF | app_psql
 create database sislegis;
 create user sislegis with password 'sislegis';
 grant all privileges on database "sislegis" to sislegis;
@@ -57,7 +68,7 @@ grant all privileges on database "sislegis" to sislegis;
 EOF
 }
 app_dropdb() {
-    cat <<EOF | psql -U postgres
+    cat <<EOF | app_psql
 drop database sislegis;
 drop user sislegis
 EOF

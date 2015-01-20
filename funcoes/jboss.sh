@@ -35,7 +35,8 @@ jboss_status() { _jboss_service status; }
 # funções de manipulação de logs:
 jboss_logs() { ls -lht "$JBOSS_LOG"/*.log; }
 jboss_rmlogs() { rm -f "$JBOSS_LOG"/*.log; }
-jboss_taillogs() { tail -f "$JBOSS_LOG"/*.log; }
+jboss_tail() { tail -F "$JBOSS_LOG"/server.log 2> /dev/null; }
+jboss_taillogs() { tail -f "$JBOSS_LOG"/*.log 2> /dev/null; }
 jboss_viewlogs() { view "$JBOSS_LOG"/*log; }
 # funções para visualizar e manipular arquivos de marcas no JBoss:
 # Refs: 

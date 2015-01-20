@@ -10,7 +10,7 @@ _wildfly_conf() {
 _baixa_driver_jdbc_postgres() {
    local driver_url="http://jdbc.postgresql.org/download/$POSTGRESQL_JDBC_DRIVER"
    echo "Baixando o driver JDBC do PostgreSQL de $driver_url"
-   cd "$INSTALADORES_DIR" && curl -O $driver_url
+   cd "$INSTALADORES_DIR" && wget -c $driver_url
    cd - &> /dev/null
 }
 
