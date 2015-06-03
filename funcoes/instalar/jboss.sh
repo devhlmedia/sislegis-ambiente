@@ -35,6 +35,16 @@ EOF
    cp "$driver_file" "$driver_dir"/
 }
 
+_instala_keycloak() {
+   local keycloak_url=http://nbtelecom.dl.sourceforge.net/project/keycloak/1.2.0.Final/keycloak-overlay-1.2.0.Final.tar.gz
+   local keycloak=${keycloak_url##*/}
+
+   echo "Baixando o instalador do keycloak ($keycloak)"
+   wget -c $keycloak_url -O "$INSTALADORES_DIR/$keycloak"
+   echo "Extraindo o instalador do keycloak"
+   tar xvfz "$INSTALADORES_DIR/$keycloak" -C "$JBOSS_HOME" &> /dev/null
+}
+
 instala_jboss() {
    local file2patch
    local init_d_script
@@ -79,6 +89,8 @@ EOF
        s,SISLEGIS_APP_HOME,$APP_HOME,g
        s,SISLEGIS_APP_HOST,$APP_HOST,g
    " "$JBOSS_HOME/$file2patch"
+
+   _instala_keycloak
 
    echo "Configurando o usuário/senha (sislegis/@dmin123) para acesso a interface administrativa"
    echo 'sislegis=fcdd56cdc33753b6a3647932ed4289c8' | tee -a $JBOSS_CONFIGURATION/mgmt-users.properties &> /dev/null
