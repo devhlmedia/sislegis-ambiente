@@ -1,9 +1,16 @@
 FORGE_LINK=forge
 FORGE_PACKAGE=forge-distribution
-FORGE_VER=2.12.2.Final
+FORGE_VER=2.16.1.Final
 FORGE_DIR=$FORGE_PACKAGE-$FORGE_VER
 FORGE_INSTALADOR=$FORGE_DIR-offline.zip
-FORGE_INSTALADOR_URL=https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/jboss/$FORGE_LINK/$FORGE_PACKAGE/$FORGE_VER
+FORGE_INSTALADOR_URL_COMPLETA="https://repository.jboss.org/nexus/service/local/artifact/maven/redirect?r=releases&g=org.jboss.forge&a=forge-distribution&v=$FORGE_VER&e=zip&c=offline"
 
-export FORGE_HOME=$FERRAMENTAS_DIR/forge
-export PATH=$FORGE_HOME/bin:$PATH
+case $PLATAFORMA in
+    Cygwin) export FORGE_HOME=`cygpath "$FORGE_HOME"`;;
+    *) 
+        export FORGE_HOME=$FERRAMENTAS_DIR/forge
+        export PATH=$FORGE_HOME/bin:$PATH
+        ;;
+esac
+
+# vim set ts=4, sw=4, expandtab:

@@ -1,5 +1,4 @@
-# instala o Maven
 maven_instalar() { instalar maven "$@"; }
-
-# remove o Maven
 maven_remover() { remover maven "$@"; }
+
+# vim: set ts=4 sw=4 expandtab:

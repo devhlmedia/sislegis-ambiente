@@ -1,0 +1,33 @@
+#!/bin/bash
+# Author: Paulo Jeronimo (paulojeoronimo@gmail.com)
+
+ambiente=${ambiente:-$HOME/Projects/github.com/paulojeronimo/javaee-ambiente}
+vimdiff=${vimdiff:-false}
+
+[ -d "$ambiente" ] || {
+    echo "Diretório \"$ambiente\" não existe!"
+    exit
+}
+
+echo "Comparando arquivos deste diretório com os de \"$ambiente\" ..."
+
+for f in $(find . -type f ! \( \
+    -name . -o \
+    -path './.git/*' \
+    \))
+do
+    if [ -f "$ambiente/$f" ]
+    then
+        if [ "$(diff "$f" "$ambiente/$f")" ]
+        then
+            echo "Arquivo $f diverge!"
+            $vimdiff && vim -d "$f" "$ambiente/$f"
+        else
+            echo "Arquivo $f confere!"
+        fi
+    else
+        echo "Arquivo $f não existe em \"$ambiente\"!"
+    fi
+done
+
+# vim: set ts=4 sw=4 expandtab:

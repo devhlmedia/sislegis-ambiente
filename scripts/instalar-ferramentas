@@ -1,8 +1,8 @@
 #!/bin/bash
 
-source ~/.`hostname -s`
+source ~/.ambiente
 maven_instalar
-#gradle_instalar
+gradle_instalar
 forge_instalar
 postgresql_instalar
 jboss_instalar
