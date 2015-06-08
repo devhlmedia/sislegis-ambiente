@@ -1,0 +1,23 @@
+#!/bin/bash
+
+export JBOSS_HOME=~/ferramentas/jboss
+KEYCLOAK_MIGRATION_DIR=~/projetos/app/keycloak
+OP=${OP:-export}
+
+case "$OP" in
+    export) 
+        $JBOSS_HOME/bin/standalone.sh \
+            -Dkeycloak.migration.action=export \
+            -Dkeycloak.migration.provider=dir \
+            -Dkeycloak.migration.dir=$KEYCLOAK_MIGRATION_DIR \
+            -Dkeycloak.migration.realmName=sislegis \
+            -Dkeycloak.migration.usersExportStrategy=REALM_FILE
+        ;;
+    import)
+        $JBOSS_HOME/bin/standalone.sh \
+            -Dkeycloak.migration.action=import \
+            -Dkeycloak.migration.provider=singleFile \
+            -Dkeycloak.migration.file=$KEYCLOAK_MIGRATION_DIR/sislegis-realm.json \
+            -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
+        ;;
+esac
