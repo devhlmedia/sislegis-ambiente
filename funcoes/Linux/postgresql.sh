@@ -15,7 +15,6 @@ _postgresql_instalar_Fedora() {
     sudo systemctl enable postgresql
 }
 
-# TODO
 _postgresql_instalar_Ubuntu() {
     sudo apt-get -y install postgresql postgresql-contrib pgadmin3
 }
@@ -38,7 +37,6 @@ _postgresql_remover_Fedora() {
     sudo userdel -rf postgres
 }
 
-# TODO
 _postgresql_remover_Ubuntu() {
     sudo apt-get -y remove postgresql postgresql-contrib pgadmin3
 }

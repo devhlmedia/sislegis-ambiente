@@ -1,5 +1,4 @@
-# instala o Gradle
 gradle_instalar() { instalar gradle "$@"; }
-
-# remove o Gradle
 gradle_remover() { remover gradle "$@"; }
+
+# vim: set ts=4 sw=4 expandtab:

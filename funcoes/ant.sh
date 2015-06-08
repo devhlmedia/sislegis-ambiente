@@ -1,5 +1,4 @@
-# instala o Ant
 ant_instalar() { instalar ant "$@"; }
-
-# remove o Ant
 ant_remover() { remover ant "$@"; }
+
+# vim: set ts=4 sw=4 expandtab:

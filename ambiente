@@ -7,8 +7,4 @@
 # retorna o caminho completo para o diretório que contém esse script
 _this_dir() { echo -n $(cd "$(dirname "$(caller | cut -d ' ' -f 2-)")"; pwd); }
 
-# .Ambiente
-export AMBIENTE_HOME=`_this_dir`
-configurar_ambiente
-carregar_ambiente
-# .Ambiente.fim
+_carregar_ambiente "`_this_dir`"

@@ -4,8 +4,6 @@
 # Funções específicas para trabalho com o PostgreSQL no OS X
 # Requer a instalação do Homebrew (http://brew.sh/)
 
-POSTGRES_LOG=/usr/local/var/postgres/server.log
-
 postgresql_instalar() {
     brew install postgresql
     initdb /usr/local/var/postgres

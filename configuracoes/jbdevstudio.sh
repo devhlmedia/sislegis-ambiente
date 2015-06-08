@@ -1,9 +1,6 @@
-JBDEVSTUDIO_INSTALA_OPCS='--nao-baixa-arquivo'
-JBDEVSTUDIO_DIR=jbdevstudio
-JBDEVSTUDIO_LINK=$JBDEVSTUDIO_DIR
-JBDEVSTUDIO_INSTALADOR=jboss-devstudio-8.0.0.GA-v20141020-1042-B317-installer-eap.jar
-JBDEVSTUDIO_CONFIGURADO=jbdevstudio.tar.gz
-# Última versão (8.0.1): http://tools.jboss.org/blog/2014-12-15-GA-for-luna.html
+# Última versão (8.0.2): http://tools.jboss.org/downloads/devstudio/luna/8.0.2.GA.html
 
-export JBDEVSTUDIO_HOME=$FERRAMENTAS_DIR/$JBDEVSTUDIO_DIR
-export PATH=$JBDEVSTUDIO_HOME:$PATH
+JBDEVSTUDIO_INSTALADOR=jboss-devstudio-8.1.0.GA-updatesite-core.zip
+JBDEVSTUDIO_INSTALADOR_URL_COMPLETA=https://devstudio.redhat.com/static/updates/8.0.0/$JBDEVSTUDIO_INSTALADOR
+
+# vim set ts=4, sw=4, expandtab:
