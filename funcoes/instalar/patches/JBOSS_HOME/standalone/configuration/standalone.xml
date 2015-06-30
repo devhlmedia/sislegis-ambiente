@@ -1,5 +1,5 @@
---- standalone.xml.original	2015-06-03 15:56:13.754857898 -0300
-+++ standalone.xml	2015-06-03 16:12:08.815387447 -0300
+--- standalone.xml.original	2015-06-30 14:13:54.013902427 +0000
++++ standalone.xml	2015-06-30 14:20:31.010311753 +0000
 @@ -25,7 +25,11 @@
          <extension module="org.wildfly.extension.batch"/>
          <extension module="org.wildfly.extension.io"/>
@@ -7,7 +7,7 @@
 +        <extension module="org.keycloak.keycloak-subsystem"/>
      </extensions>
 +    <system-properties>
-+        <property name="sislegis.app.home" value="SISLEGIS_APP_HOME"/>
++        <property name="sislegis.app.frontend.home" value="SISLEGIS_APP_FRONTEND_HOME"/>
 +    </system-properties>
      <management>
          <security-realms>
@@ -73,8 +73,8 @@
                      <filter-ref name="server-header"/>
                      <filter-ref name="x-powered-by-header"/>
                  </host>
-+                <host name="sislegis" alias="SISLEGIS_APP_HOST" default-web-module="sislegis.war">
-+                    <location name="/static" handler="sislegis-static"/>
++                <host name="sislegis" alias="SISLEGIS_APP_HOST">
++                    <location name="/" handler="sislegis-app-frontend"/>
 +                </host>
              </server>
              <servlet-container name="default">
@@ -83,7 +83,7 @@
              </servlet-container>
              <handlers>
                  <file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>
-+                <file name="sislegis-static" path="${sislegis.app.home}/src/main/webapp/static"/>
++                <file name="sislegis-app-frontend" path="${sislegis.app.frontend.home}"/>
              </handlers>
              <filters>
                  <response-header name="server-header" header-name="Server" header-value="WildFly/8"/>

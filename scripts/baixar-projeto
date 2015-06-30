@@ -7,6 +7,7 @@ CONFIG="$AMBIENTE_HOME"/.projetos
 source "$CONFIG" &> /dev/null || {
     cat > "$CONFIG" <<EOF
 app=http://github.com/pensandoodireito/sislegis-app
+app_frontend=http://github.com/pensandoodireito/sislegis-app-frontend
 site=http://github.com/pensandoodireito/sislegis-site
 EOF
     source "$CONFIG"

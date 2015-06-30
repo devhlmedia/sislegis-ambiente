@@ -80,13 +80,14 @@ EOF
 
    file2patch=standalone/configuration/standalone.xml
    echo "Aplicando patch no arquivo $JBOSS_HOME/$file2patch"
+   cp "$JBOSS_HOME"/$file2patch "$JBOSS_HOME"/$file2patch.original
    patch $JBOSS_HOME/$file2patch < "$FUNCOES_DIR"/instalar/patches/JBOSS_HOME/$file2patch > /dev/null
 
    _instala_driver_jdbc_postgres
 
    echo "Configurando variáveis no arquivo $JBOSS_HOME/$file2patch"
    sed_i "
-       s,SISLEGIS_APP_HOME,$APP_HOME,g
+       s,SISLEGIS_APP_FRONTEND_HOME,$APP_FRONTEND_HOME,g
        s,SISLEGIS_APP_HOST,$APP_HOST,g
    " "$JBOSS_HOME/$file2patch"
 
