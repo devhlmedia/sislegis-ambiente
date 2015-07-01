@@ -59,7 +59,7 @@ JAVA_HOME="$JAVA_HOME"
 JBOSS_USER=$USER
 JBOSS_HOME="$JBOSS_HOME"
 JBOSS_MODE=standalone
-JBOSS_PARAMS="-b 0.0.0.0 -bmanagement=0.0.0.0"
+JBOSS_PARAMS='-b 0.0.0.0 -bmanagement=0.0.0.0 -Dkeycloak.import="$CONFIGURACOES_DIR/keycloak/sislegis-realm.json"'
 EOF
 
       file2patch=etc/init.d/jboss
