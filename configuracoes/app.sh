@@ -1,4 +1,4 @@
-export APP_HOME=$PROJETOS_DIR/app
+APP_HOME=$PROJETOS_DIR/app
 APP_AMBIENTE=${APP_AMBIENTE:-desenvolvimento}
 
 case `uname` in
@@ -33,5 +33,7 @@ case `uname` in
     APP_IP=${APP_IP:-127.0.0.1}
     ;;    
 esac
+
+export APP_HOME APP_AMBIENTE APP_HOST APP_IP
 
 # vim: set ts=2 sw=2 expandtab:

@@ -3,7 +3,6 @@
 set +x
 
 CONFIG="$AMBIENTE_HOME"/.projetos
-
 source "$CONFIG" &> /dev/null || {
     cat > "$CONFIG" <<EOF
 app=http://github.com/pensandoodireito/sislegis-app
@@ -38,5 +37,24 @@ fi
 rm -rf $PROJETO
 
 git clone ${!PROJETO} $PROJETO || exit $?
+
+if [ "$APP_AMBIENTE" = "homologacao" ]
+then
+    case "$PROJETO" in
+        app)
+            sed -i "s,localhost:8080,$APP_IP,g" "$PROJETO/src/main/webapp/WEB-INF/keycloak.json"
+            ;;
+        app_frontend)
+            cd "$PROJETO"
+            for f in index.html keycloak.json
+            do
+                sed -i "s,localhost:8080,$APP_IP,g" $f
+            done
+            sed -i "s,sislegis.local:8080,$APP_HOST,g" scripts/app.js
+            match="localhost:8080" change="$APP_IP" .scripts/change-rest-endpoint.sh
+            cd - &> /dev/null
+            ;;
+    esac
+fi
 
 # vim: set ts=4 sw=4 expandtab:

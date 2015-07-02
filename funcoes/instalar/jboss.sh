@@ -59,7 +59,7 @@ JAVA_HOME="$JAVA_HOME"
 JBOSS_USER=$USER
 JBOSS_HOME="$JBOSS_HOME"
 JBOSS_MODE=standalone
-JBOSS_PARAMS='-b 0.0.0.0 -bmanagement=0.0.0.0 -Dkeycloak.import="$CONFIGURACOES_DIR/keycloak/sislegis-realm.json"'
+JBOSS_PARAMS='-b 0.0.0.0 -bmanagement=0.0.0.0 -Dkeycloak.import="$JBOSS_HOME/sislegis-realm.json"'
 EOF
 
       file2patch=etc/init.d/jboss
@@ -115,6 +115,15 @@ EOF
          fi
          ;;
    esac
+
+   if [ "$APP_AMBIENTE" = "homologacao" ]
+   then
+      echo "Redirecionando requisições a porta 80 para 8080 ..."
+      sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+      sudo service iptables save
+   fi
+   echo "Gerando \"$JBOSS_HOME/sislegis-realm.json\" ..."
+   sed "s,APP_HOST,$APP_HOST,g" "$CONFIGURACOES_DIR/keycloak/sislegis-realm.json.$APP_AMBIENTE" > "$JBOSS_HOME"/sislegis-realm.json
 }
 
 remove_jboss() {
