@@ -120,6 +120,7 @@ EOF
    then
       echo "Redirecionando requisições a porta 80 para 8080 ..."
       sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+      sudo iptables -t nat -I OUTPUT -p tcp -o lo --dport 80 -j REDIRECT --to-ports 8080
       sudo service iptables save
    fi
    echo "Gerando \"$JBOSS_HOME/sislegis-realm.json\" ..."
