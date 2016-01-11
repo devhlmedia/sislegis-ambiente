@@ -2,9 +2,7 @@ instala_maven() {
     local settings_dir="$HOME"/.m2
     instala_aplicacao
 
-    if [ "$USA_PROXY" ]
-    then
-        mkdir -p "$settings_dir"
+     mkdir -p "$settings_dir"
         cat > "$settings_dir"/settings.xml <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" 
@@ -13,7 +11,7 @@ instala_maven() {
   <proxies>
     <proxy>
       <id>MJ</id>
-      <active>true</active>
+      <active>false</active>
       <protocol>http</protocol>
       <username>$HTTP_PROXY_USERNAME</username>
       <password>$HTTP_PROXY_PASSWORD</password>
@@ -21,9 +19,25 @@ instala_maven() {
       <port>$HTTP_PROXY_PORT</port>
     </proxy>
   </proxies>
+  <profiles>
+      <profile>
+            <id>sislegis</id>
+            <properties>
+               <keycloak.server>localhost</keycloak.server>
+            </properties>
+        <activation>
+                                <activeByDefault>true</activeByDefault>
+                                <jdk>1.7</jdk>
+                        </activation>
+
+                </profile>
+        </profiles>
+    <activeProfiles>
+       <activeProfile>sislegis</activeProfile>
+    </activeProfiles>
+
 </settings>
 EOF
-    fi
 }
 
 remove_maven() {
