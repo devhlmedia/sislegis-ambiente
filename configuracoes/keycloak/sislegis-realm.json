@@ -124,6 +124,27 @@
   "defaultRoles" : [ "user" ],
   "requiredCredentials" : [ "password" ],
   "users" : [ {
+    "id" : "f5de5b00-24b0-490b-a2ce-80fdc57a994d",
+    "username" : "rafael.coutinho",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "rafael",
+    "lastName" : "couitinho",
+    "email" : "rafael.coutinho@gmail.com",
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "0seenEQmvQJjoC+yMdd9zcyTR9gz1o7cWu1l0TrzKY9Q9uJvP7eP8am74oMeEkkmP9+BvBOHdLl2iH8vzneYAA==",
+      "salt" : "z3WTy2UQyIK27DMsRDqKsQ==",
+      "hashIterations" : 1,
+      "temporary" : false
+    } ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "user" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    }
+  }, {
     "id" : "8505e95e-ae13-4f5f-ae27-503e05cef999",
     "username" : "sislegis",
     "enabled" : true,
@@ -545,12 +566,12 @@
   }, {
     "id" : "d7e0c5e8-818e-4c2e-8f95-e3f3bf775720",
     "clientId" : "sislegis",
-    "baseUrl" : "http://sislegis.local",
+    "baseUrl" : "http://sislegis.local*",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "secret" : "f11d271e-58f4-4a4d-8722-ca8e983d8a6b",
     "redirectUris" : [ "http://sislegis.local/*" ],
-    "webOrigins" : [ "http://sislegis.local" ],
+    "webOrigins" : [ "http://sislegis.local*" ],
     "notBefore" : 0,
     "bearerOnly" : false,
     "consentRequired" : false,
